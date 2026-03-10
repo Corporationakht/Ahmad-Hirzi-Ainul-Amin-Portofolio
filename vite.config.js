@@ -4,6 +4,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/Ahmad-Hirzi-Ainul-Amin-Portofolio/",
+  base: "/",
   plugins: [react(), tailwindcss()],
 })
