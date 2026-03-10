@@ -1,8 +1,24 @@
+import { useRef } from "react";
 import "remixicon/fonts/remixicon.css";
 import Dock from "./Dock/Dock";
 import { VscHome, VscArchive, VscAccount } from "react-icons/vsc";
 
-const Footer = () => {
+const Footer = ({ onAdminTrigger }) => {
+  const clickCount = useRef(0);
+  const clickTimer = useRef(null);
+
+  const handleTitleClick = () => {
+    clickCount.current += 1;
+    if (clickCount.current === 1) {
+      clickTimer.current = setTimeout(() => { clickCount.current = 0; }, 3000);
+    }
+    if (clickCount.current >= 5) {
+      clickCount.current = 0;
+      clearTimeout(clickTimer.current);
+      onAdminTrigger?.();
+    }
+  };
+
   const items = [
     { icon: <VscHome size={18} />, label: "Home", onClick: () => document.getElementById("home")?.scrollIntoView({ behavior: "smooth" }) },
     { icon: <VscAccount size={18} />, label: "About Me", onClick: () => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" }) },
@@ -14,8 +30,11 @@ const Footer = () => {
       {/* Flex container adaptif */}
       <div className="w-full flex flex-col md:flex-row items-center md:justify-between gap-6">
         
-        {/* Judul - paling atas di mobile */}
-        <h1 className="text-2xl font-bold order-1 md:order-none">
+        {/* Judul - paling atas di mobile (klik 5x = admin) */}
+        <h1
+          className="text-2xl font-bold order-1 md:order-none cursor-default select-none"
+          onClick={handleTitleClick}
+        >
           Ahmad's Portofolio
         </h1>
 

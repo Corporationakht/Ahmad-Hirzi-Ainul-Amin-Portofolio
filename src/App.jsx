@@ -12,6 +12,10 @@ import ProjectModal from "./components/ProjectModal/ProjectModal"; // <-- IMPORT
 import Aurora from "./components/Aurora/Aurora";
 import AOS from 'aos';
 import ChatRoom from "./components/ChatRoom";
+import Footer from "./components/Footer";
+import AdminPanel from "./components/AdminPanel";
+import { db } from "./firebase";
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import 'aos/dist/aos.css'; // You can also use <link> for styles
 // ..
 AOS.init();
@@ -20,7 +24,17 @@ function App() {
   const aboutRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  const [selectedProject, setSelectedProject] = useState(null); // null = modal tertutup
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
+  const [firestoreProjects, setFirestoreProjects] = useState([]);
+
+  useEffect(() => {
+    const q = query(collection(db, "projects"), orderBy("createdAt", "asc"));
+    const unsub = onSnapshot(q, (snap) => {
+      setFirestoreProjects(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+    });
+    return () => unsub();
+  }, []);
 
   const handleProjectClick = (project) => {
     setSelectedProject(project);
@@ -215,7 +229,7 @@ function App() {
 
           <div style={{ height: 'auto', position: 'relative' }} data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400" data-aos-once="true" >
             <ChromaGrid
-              items={listProyek}
+              items={firestoreProjects.length > 0 ? firestoreProjects : listProyek}
               onItemClick={handleProjectClick} // Kirim fungsi untuk handle klik
               radius={500}
               damping={0.45}
@@ -315,10 +329,17 @@ function App() {
         {/* Kontak */}
       </main>
 
+      <Footer onAdminTrigger={() => setIsAdminPanelOpen(true)} />
+
       <ProjectModal
         isOpen={!!selectedProject}
         onClose={handleCloseModal}
         project={selectedProject}
+      />
+
+      <AdminPanel 
+        isOpen={isAdminPanelOpen}
+        onClose={() => setIsAdminPanelOpen(false)}
       />
     </>
   )

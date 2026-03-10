@@ -69,7 +69,7 @@ export const listProyek = [
     fullDescription: "Platform AI yang dikembangkan untuk membantu mahasiswa dalam berbagai kebutuhan akademik. Fitur utamanya meliputi: 1) Journal Search (pencarian jurnal ilmiah untuk referensi penelitian), 2) AI Chat (asisten AI untuk diskusi akademik), 3) Slide AI (pembuatan presentasi otomatis), 4) Generator Karya Ilmiah (pembuatan tulisan akademik secara terstruktur).",
     borderColor: "#3B82F6",
     gradient: "linear-gradient(145deg, #3B82F6, #000)",
-    url: "#",
+    url: "https://www.ilmiconnect.my.id",
     dad: "100",
   }
 ];

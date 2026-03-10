@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -26,3 +27,9 @@ export const logout = () => signOut(auth);
 
 // Firestore
 export const db = getFirestore(app);
+
+// Storage
+export const storage = getStorage(app);
+
+// Admin email
+export const ADMIN_EMAIL = "hirzia63@gmail.com";
