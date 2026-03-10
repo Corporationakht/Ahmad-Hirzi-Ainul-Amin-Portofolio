@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { db, storage, ADMIN_EMAIL, auth, loginWithGoogle, logout } from "../firebase";
+import { db, ADMIN_EMAIL, auth, loginWithGoogle, logout } from "../firebase";
 import {
   collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 // API Key ImgBB gratis (client-side safe untuk CMS sederhana)
-const IMGBB_API_KEY = "6cc5df1fbb7fc2d406bb17f8a9a837cf";
+const IMGBB_API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
 
 const AdminPanel = ({ isOpen, onClose }) => {
   const [user, setUser] = useState(null);
@@ -230,7 +230,7 @@ const AdminPanel = ({ isOpen, onClose }) => {
                     className="w-full bg-zinc-700 text-white rounded-lg p-2 text-sm file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:bg-violet-600 file:text-white file:font-semibold file:text-sm file:cursor-pointer"
                   />
                   {imagePreview && (
-                    <img src={imagePreview} alt="Preview" className="mt-2 w-full h-40 object-cover rounded-lg border border-zinc-600" />
+                    <img src={imagePreview} alt="Preview" className="mt-2 w-full h-40 object-contain bg-zinc-900 rounded-lg border border-zinc-600" />
                   )}
                 </div>
 
@@ -330,7 +330,7 @@ const AdminPanel = ({ isOpen, onClose }) => {
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-20 h-14 object-cover rounded-lg flex-shrink-0"
+                        className="w-20 h-14 object-contain bg-zinc-900 rounded-lg flex-shrink-0"
                       />
                       <div className="flex-1 min-w-0">
                         <h3 className="text-white font-semibold text-sm truncate">{project.title}</h3>

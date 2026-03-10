@@ -46,7 +46,7 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
         <img 
           src={project.image} 
           alt={project.title} 
-          className="w-full h-56 object-cover rounded-t-2xl"
+          className="w-full h-56 object-contain bg-zinc-800 rounded-t-2xl"
         />
 
         <div className="p-6 flex flex-col gap-4">
