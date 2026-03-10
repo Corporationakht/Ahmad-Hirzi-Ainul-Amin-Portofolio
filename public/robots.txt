@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ahmad-hirzi-ainul-amin-portofolio.vercel.app/sitemap.xml
+Sitemap: https://ahmadhirzi.web.id/sitemap.xml
