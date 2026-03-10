@@ -3,8 +3,10 @@ import { db, storage, ADMIN_EMAIL, auth, loginWithGoogle, logout } from "../fire
 import {
   collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp
 } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { onAuthStateChanged } from "firebase/auth";
+
+// API Key ImgBB gratis (client-side safe untuk CMS sederhana)
+const IMGBB_API_KEY = "6cc5df1fbb7fc2d406bb17f8a9a837cf";
 
 const AdminPanel = ({ isOpen, onClose }) => {
   const [user, setUser] = useState(null);
@@ -50,10 +52,20 @@ const AdminPanel = ({ isOpen, onClose }) => {
   };
 
   const uploadImage = async (file) => {
-    const fileName = `projects/${Date.now()}_${file.name}`;
-    const storageRef = ref(storage, fileName);
-    await uploadBytes(storageRef, file);
-    return await getDownloadURL(storageRef);
+    const formData = new FormData();
+    formData.append("image", file);
+    
+    const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+      method: "POST",
+      body: formData,
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+      return data.data.url; // URL gambar aslinya dari ImgBB
+    } else {
+      throw new Error(data.error?.message || "Gagal upload gambar ke ImgBB");
+    }
   };
 
   const resetForm = () => {
@@ -128,13 +140,8 @@ const AdminPanel = ({ isOpen, onClose }) => {
     if (!window.confirm(`Hapus project "${project.title}"?`)) return;
 
     try {
-      // Hapus gambar dari Storage jika ada
-      if (project.image && project.image.includes("firebase")) {
-        try {
-          const imageRef = ref(storage, project.image);
-          await deleteObject(imageRef);
-        } catch { /* ignore if image doesn't exist */ }
-      }
+      // Catatan: ImgBB API gratis tidak mendukung penghapusan gambar via API key client
+      // Jadi gambar akan dibiarkan (orphan) di server ImgBB, ini normal untuk ImgBB
       await deleteDoc(doc(db, "projects", project.id));
     } catch (err) {
       setError("Gagal menghapus: " + err.message);

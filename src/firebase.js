@@ -28,8 +28,5 @@ export const logout = () => signOut(auth);
 // Firestore
 export const db = getFirestore(app);
 
-// Storage
-export const storage = getStorage(app);
-
 // Admin email
 export const ADMIN_EMAIL = "hirzia63@gmail.com";
