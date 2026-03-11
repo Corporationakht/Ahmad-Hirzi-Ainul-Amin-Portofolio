@@ -9,3 +9,18 @@
   transform: scale(1.08) translateX(-30px);
   transform-origin: center;
 }
+
+@media (max-width: 768px) {
+  .lanyard-wrapper {
+    width: 100%;
+    height: 55vh;
+    transform: scale(1);
+    transform-origin: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .lanyard-wrapper {
+    height: 45vh;
+  }
+}

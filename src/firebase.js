@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -26,6 +27,9 @@ export const logout = () => signOut(auth);
 
 // Firestore
 export const db = getFirestore(app);
+
+// Storage
+export const storage = getStorage(app);
 
 // Admin email
 export const ADMIN_EMAIL = "hirzia63@gmail.com";

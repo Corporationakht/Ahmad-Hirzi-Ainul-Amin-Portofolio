@@ -93,7 +93,7 @@ function App() {
               <img src="./assets/ahmad1.png" className="w-10 rounded-md" />
               <q>Avoid or just undertake it</q>
             </div>
-            <h1 className="text-5xl font-bold mb-6">
+            <h1 className="sm:text-5xl text-3xl font-bold mb-6">
               <ShinyText text="Hi I'm Ahmad Hirzi Ainul Amin" disabled={false} speed={3} className='custom-class' />
             </h1>
             <BlurText
@@ -103,7 +103,7 @@ function App() {
               direction="top"
               className=" mb-6"
             />
-            <div className="flex items-center sm:gap-4 gap-2">
+            <div className="flex flex-wrap items-center sm:gap-4 gap-2">
               <a 
                 href="./assets/CV.pdf" 
                 download="Ahmad_Hirzi_Ainul_Amin_CV.pdf" 
@@ -136,14 +136,14 @@ function App() {
         </div>
         {/* tentang */}
         <div className="mt-15 mx-auto w-full max-w-[1600px] rounded-3xl border-[5px] border-violet-500/40 shadow-[0_0_30px_rgba(168,85,247,0.4)] bg-gradient-to-br from-[#0a0a0a] via-[#111111] to-[#1a1a1a] p-6" id="about">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-10 pt-0 px-8" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-10 pt-0 sm:px-8 px-4" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
             {/* Kolom Kiri: Lanyard ID Card (Dulu di Kanan) */}
             <div className="order-2 md:order-1 basis-full md:basis-5/12 pr-0 md:pr-8 overflow-hidden max-w-full flex justify-center md:border-r border-violet-500/30">
               <Lanyard position={[0, 0, 15]} gravity={[0, -40, 0]} />
             </div>
             
             {/* Kolom Kanan: Teks About Me (Dulu di Kiri) */}
-            <div className="order-1 md:order-2 basis-full md:basis-7/12 pl-0 md:pl-8 border-b md:border-b-0 border-violet-500/30">
+            <div className="order-1 md:order-2 basis-full md:basis-7/12 pl-0 md:pl-8 border-b md:border-b-0 border-violet-500/30 pb-6 md:pb-0">
               <div className="flex-1 text-left">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">
                   About Me
@@ -191,7 +191,7 @@ function App() {
         </div>
         <div className="tools mt-32">
           <h1 className="text-4xl/snug font-bold mb-4" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" >Tools & Technologies</h1>
-          <p className="w-2/5 text-base/loose opacity-50" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300" data-aos-once="true">My Profesional Skills</p>
+          <p className="sm:w-2/5 w-full text-base/loose opacity-50" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300" data-aos-once="true">My Profesional Skills</p>
           <div className="tools-box mt-14 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
 
             {listTools.map((tool) => (
@@ -306,10 +306,9 @@ function App() {
                     <textarea
                       name="message"
                       id="message"
-                      cols="45"
                       rows="7"
                       placeholder="Message..."
-                      className="border border-zinc-500 p-2 rounded-md"
+                      className="border border-zinc-500 p-2 rounded-md w-full"
                       required
                     ></textarea>
                   </div>

@@ -47,6 +47,17 @@
   }
 }
 
+@media (max-width: 480px) {
+  .chroma-grid {
+    grid-template-columns: 1fr;
+    padding: 0.5rem;
+  }
+
+  .chroma-card {
+    width: 100%;
+  }
+}
+
 .chroma-card {
   position: relative;
   display: flex;
