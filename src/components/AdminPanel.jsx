@@ -5,8 +5,9 @@ import {
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
-// API Key ImgBB gratis (client-side safe untuk CMS sederhana)
-const IMGBB_API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
+// Cloudinary Unsigned Upload
+const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 const AdminPanel = ({ isOpen, onClose }) => {
   const [user, setUser] = useState(null);
@@ -53,18 +54,19 @@ const AdminPanel = ({ isOpen, onClose }) => {
 
   const uploadImage = async (file) => {
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
     
-    const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
       method: "POST",
       body: formData,
     });
     
     const data = await response.json();
-    if (data.success) {
-      return data.data.url; // URL gambar aslinya dari ImgBB
+    if (data.secure_url) {
+      return data.secure_url; // URL gambar aslinya dari Cloudinary (menggunakan HTTPS)
     } else {
-      throw new Error(data.error?.message || "Gagal upload gambar ke ImgBB");
+      throw new Error(data.error?.message || "Gagal upload gambar ke Cloudinary");
     }
   };
 
@@ -140,8 +142,8 @@ const AdminPanel = ({ isOpen, onClose }) => {
     if (!window.confirm(`Hapus project "${project.title}"?`)) return;
 
     try {
-      // Catatan: ImgBB API gratis tidak mendukung penghapusan gambar via API key client
-      // Jadi gambar akan dibiarkan (orphan) di server ImgBB, ini normal untuk ImgBB
+      // Catatan: Cloudinary API client-side tanpa signature biasanya tidak mendukung penghapusan via URL
+      // Jadi gambar lama akan tetap ada di Cloudinary, ini normal untuk integrasi sederhana
       await deleteDoc(doc(db, "projects", project.id));
     } catch (err) {
       setError("Gagal menghapus: " + err.message);
@@ -151,7 +153,7 @@ const AdminPanel = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] overflow-y-auto">
+    <div className="fixed inset-0 bg-zinc-950/95 z-[9999] overflow-y-auto">
       <div className="max-w-3xl mx-auto p-6 mt-4 mb-10">
 
         {/* Header */}

@@ -76,14 +76,16 @@ function App() {
 
   return (
     <>
-      <div className="absolute top-0 left-0 w-full h-full -z-10 ">
-        <Aurora
-          colorStops={["#577870", "#1F97A6", "#127B99"]}
-          blend={0.5}
-          amplitude={1.0}
-          speed={0.5}
-        />
-      </div>
+      {!selectedProject && !isAdminPanelOpen && (
+        <div className="absolute top-0 left-0 w-full h-full -z-10 ">
+          <Aurora
+            colorStops={["#577870", "#1F97A6", "#127B99"]}
+            blend={0.5}
+            amplitude={1.0}
+            speed={0.5}
+          />
+        </div>
+      )}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="hero grid md:grid-cols-2 items-center pt-10 xl:gap-0 gap-6 grid-cols-1">
@@ -227,7 +229,7 @@ function App() {
         <p className="text-base/loose text-center opacity-50" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300" data-aos-once="true">Showcasing a selection of projects that reflect my skills, creativity, and passion for building meaningful digital experiences.</p>
         <div className="proyek-box mt-14" >
 
-          <div style={{ height: 'auto', position: 'relative' }} data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400" data-aos-once="true" >
+          <div style={{ height: 'auto', position: 'relative', visibility: (selectedProject || isAdminPanelOpen) ? 'hidden' : 'visible' }} data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400" data-aos-once="true" >
             <ChromaGrid
               items={firestoreProjects.length > 0 ? firestoreProjects : listProyek}
               onItemClick={handleProjectClick} // Kirim fungsi untuk handle klik
